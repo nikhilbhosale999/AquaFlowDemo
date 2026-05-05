@@ -4,7 +4,7 @@ import { Environment, Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ProceduralFish from './Fish';
+import { Clownfish, BlueTang } from './Fish';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -218,7 +218,7 @@ const AnimatedFishAndCamera = () => {
 
   return (
     <group ref={fishRef}>
-      <ProceduralFish scale={0.8} />
+      <Clownfish scale={0.7} />
     </group>
   );
 };
@@ -269,12 +269,7 @@ const AnimatedSecondFish = () => {
 
   return (
     <group ref={fish2Ref}>
-      <ProceduralFish 
-        scale={0.6} 
-        bodyColor="#ff7b00" 
-        finColor="#ffb347" 
-        emissiveColor="#5a2a00" 
-      />
+      <BlueTang scale={0.7} />
     </group>
   );
 };
@@ -303,6 +298,48 @@ const EnvironmentUpdater = () => {
   return null;
 };
 
+// Looping background fish that swim far away from right to left
+const BackgroundFish = ({ startOffset = 0, depth = -20, speed = 0.5, scale = 0.4, yOffset = 0 }) => {
+  const ref = useRef();
+  
+  useFrame((state) => {
+    const t = state.clock.elapsedTime * speed + startOffset;
+    if (!ref.current) return;
+    
+    // Swims continuously from x=30 to x=-30
+    const xPos = 30 - ((t * 4) % 60); 
+    
+    ref.current.position.set(
+      xPos,
+      yOffset + Math.sin(t * 1.5) * 1.5,
+      depth + Math.cos(t * 1.2) * 2
+    );
+    
+    // Math.PI makes the fish face left (-X). Adding slight wiggle to rotation.
+    ref.current.rotation.y = Math.PI + Math.cos(t * 1.5) * 0.15;
+    ref.current.rotation.z = Math.sin(t * 1.5) * 0.05;
+  });
+
+  return (
+    <group ref={ref}>
+      <BlueTang scale={scale} />
+    </group>
+  );
+};
+
+const BackgroundSchool = () => {
+  return (
+    <group>
+      {/* Several BlueTang fishes swimming in the distant background */}
+      <BackgroundFish startOffset={0} depth={-15} speed={0.8} scale={0.35} yOffset={2} />
+      <BackgroundFish startOffset={15} depth={-25} speed={0.6} scale={0.25} yOffset={-1} />
+      <BackgroundFish startOffset={35} depth={-20} speed={0.9} scale={0.4} yOffset={5} />
+      <BackgroundFish startOffset={50} depth={-30} speed={0.5} scale={0.2} yOffset={-4} />
+      <BackgroundFish startOffset={80} depth={-18} speed={0.7} scale={0.3} yOffset={0} />
+    </group>
+  );
+};
+
 const Scene = () => {
   return (
     <Canvas
@@ -321,6 +358,7 @@ const Scene = () => {
 
       <AnimatedFishAndCamera />
       <AnimatedSecondFish />
+      <BackgroundSchool />
 
       <Particles />
       <Bubbles />

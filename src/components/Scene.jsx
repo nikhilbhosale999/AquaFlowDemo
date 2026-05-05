@@ -286,13 +286,13 @@ const Scene = () => {
       dpr={[1, 1.5]} // Cap pixel ratio for performance
       gl={{ alpha: true, antialias: true }}
     >
-      <color attach="background" args={['#060a17']} />
-      <fogExp2 attach="fog" args={['#060a17', 0.08]} />
+      <fogExp2 attach="fog" args={['#010a17', 0.06]} />
 
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
-      <pointLight position={[-5, -5, -5]} intensity={0.5} color="#3e65ff" />
-      <spotLight position={[0, 10, 0]} intensity={1.5} color="#8a9cff" penumbra={1} />
+      {/* Underwater Lighting Setup */}
+      <ambientLight intensity={0.6} color="#0069a6" />
+      <directionalLight position={[0, 10, 0]} intensity={2.5} color="#ffffff" castShadow />
+      <pointLight position={[-5, -5, -5]} intensity={0.8} color="#00e5ff" />
+      <spotLight position={[0, 15, 0]} intensity={2} color="#8ae6ff" penumbra={1} angle={0.6} />
 
       <AnimatedFishAndCamera />
       <AnimatedSecondFish />

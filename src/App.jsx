@@ -39,9 +39,9 @@ function App() {
         <Scene />
       </div>
 
-      <nav className="fixed top-0 left-0 w-full p-6 z-50 flex justify-between items-center mix-blend-difference">
+      <nav className="fixed top-0 left-0 w-full p-6 z-50 flex justify-between items-center text-[#001f42]">
         <div className="text-xl font-bold tracking-tight">AquaFlow Studio</div>
-        <button className="px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all text-sm font-medium">
+        <button className="px-5 py-2.5 rounded-full bg-[#001f42]/10 backdrop-blur-md border border-[#001f42]/20 hover:bg-[#001f42]/20 transition-all text-sm font-bold">
           Get in touch
         </button>
       </nav>
@@ -50,18 +50,18 @@ function App() {
         {/* Section 1: Hero */}
         <section className="min-h-screen flex flex-col justify-center px-6 md:px-20 max-w-7xl mx-auto pt-20 pb-10">
           <div className="max-w-3xl">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white to-white/60">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-[#001f42] to-[#004b93]">
               Immersive websites that move like water.
             </h1>
-            <p className="text-lg md:text-xl text-brand-light/80 mb-10 max-w-xl font-light">
+            <p className="text-lg md:text-xl text-[#001f42]/80 mb-10 max-w-xl font-medium">
               We design interactive digital experiences with 3D motion, storytelling, and performance-first engineering.
             </p>
             <div className="flex flex-wrap gap-4">
-              <button className="flex items-center gap-2 px-8 py-4 rounded-full bg-brand-accent hover:bg-blue-600 transition-colors text-white font-medium shadow-lg shadow-brand-accent/20">
+              <button className="flex items-center gap-2 px-8 py-4 rounded-full bg-[#001f42] hover:bg-[#004b93] transition-colors text-white font-medium shadow-lg shadow-[#001f42]/20">
                 Explore Work <ArrowRight size={18} />
               </button>
-              <button className="flex items-center gap-2 px-8 py-4 rounded-full glass-card hover:bg-white/5 transition-colors font-medium">
-                <Play size={18} className="fill-white" /> Showreel
+              <button className="flex items-center gap-2 px-8 py-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/40 transition-colors font-bold text-[#001f42]">
+                <Play size={18} className="fill-[#001f42] text-[#001f42]" /> Showreel
               </button>
             </div>
           </div>

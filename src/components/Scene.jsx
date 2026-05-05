@@ -279,6 +279,30 @@ const AnimatedSecondFish = () => {
   );
 };
 
+// Dynamically updates the fog color to match the CSS gradient depth as we scroll down
+const EnvironmentUpdater = () => {
+  const { scene } = useThree();
+  const topColor = useMemo(() => new THREE.Color('#118ab2'), []);
+  const bottomColor = useMemo(() => new THREE.Color('#001f42'), []);
+  const smoothedProgress = useRef(0);
+
+  const prefersReducedMotion = useMemo(() => {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, []);
+
+  useFrame(() => {
+    if (!prefersReducedMotion) {
+      smoothedProgress.current += (globalTargetProgress.current - smoothedProgress.current) * 0.05;
+    } else {
+      smoothedProgress.current = 0.5;
+    }
+    const p = Math.max(0, Math.min(1, smoothedProgress.current));
+    scene.fog.color.lerpColors(topColor, bottomColor, p);
+  });
+  
+  return null;
+};
+
 const Scene = () => {
   return (
     <Canvas
@@ -286,13 +310,14 @@ const Scene = () => {
       dpr={[1, 1.5]} // Cap pixel ratio for performance
       gl={{ alpha: true, antialias: true }}
     >
-      <fogExp2 attach="fog" args={['#010a17', 0.06]} />
+      <fogExp2 attach="fog" args={['#118ab2', 0.05]} />
+      <EnvironmentUpdater />
 
-      {/* Underwater Lighting Setup */}
-      <ambientLight intensity={0.6} color="#0069a6" />
-      <directionalLight position={[0, 10, 0]} intensity={2.5} color="#ffffff" castShadow />
-      <pointLight position={[-5, -5, -5]} intensity={0.8} color="#00e5ff" />
-      <spotLight position={[0, 15, 0]} intensity={2} color="#8ae6ff" penumbra={1} angle={0.6} />
+      {/* Underwater Lighting Setup - Top Surface Sunlight */}
+      <ambientLight intensity={0.9} color="#2cb5e8" />
+      <directionalLight position={[0, 20, 5]} intensity={2.5} color="#ffffff" castShadow />
+      <pointLight position={[-5, -5, -5]} intensity={0.6} color="#118ab2" />
+      <spotLight position={[0, 15, 5]} intensity={3} color="#c4f4ff" penumbra={1} angle={0.6} />
 
       <AnimatedFishAndCamera />
       <AnimatedSecondFish />
